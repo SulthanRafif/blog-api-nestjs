@@ -1,7 +1,4 @@
 import { Module, ValidationPipe } from '@nestjs/common';
-import { CategoriesModule } from './categories/categories.module';
-import { ProductsModule } from './products/products.module';
-import { CataloguesModule } from './catalogues/catalogues.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from './common/config/database.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,8 +10,13 @@ import {
   RouterModule,
 } from '@nestjs/core';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
-import { AuthModule } from './auth/auth.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
+import { PhotosModule } from './photos/photos.module';
+import { TodosModule } from './todos/todos.module';
 
 @Module({
   imports: [
@@ -34,16 +36,19 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
       {
         path: 'v1',
         children: [
-          { path: '/', module: CategoriesModule },
-          { path: '/', module: ProductsModule },
-          { path: '/', module: CataloguesModule },
+          { path: '/', module: UsersModule },
+          { path: '/', module: PostsModule },
+          { path: '/', module: CommentsModule },
+          { path: '/', module: AuthModule },
         ],
       },
     ]),
-    CategoriesModule,
-    ProductsModule,
-    CataloguesModule,
+    UsersModule,
+    CommentsModule,
+    PostsModule,
     AuthModule,
+    PhotosModule,
+    TodosModule,
   ],
   controllers: [],
   providers: [
